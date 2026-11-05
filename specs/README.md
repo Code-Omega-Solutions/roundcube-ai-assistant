@@ -7,5 +7,6 @@ Use the repository's Spec Kit skills to clarify product requirements, plan chang
 Current product specification:
 
 - [AI draft assistant baseline](001-ai-draft-assistant/spec.md)
+- [Roundcube UI localization](002-ui-localization/spec.md)
 
 The baseline describes the extracted implementation. Open productization and validation work remains listed in its plan and tasks; do not treat unverified compatibility or tool behavior as a guarantee.

@@ -4,10 +4,11 @@ This is the living backlog for making the extracted baseline safe and supportabl
 
 ## 1. Release readiness
 
-- [ ] 1.1 Select a project license with the repository owner and add the corresponding `LICENSE`.
+- [x] 1.1 Select a project license with the repository owner and add the corresponding `LICENSE`. MIT selected on 2026-11-05; package metadata and licensing tests updated, with third-party licenses preserved.
 - [ ] 1.2 Decide and specify the effective Open WebUI tool policy; default to the least privilege needed.
 - [ ] 1.3 Document supported Roundcube, PHP, and Open WebUI versions after testing.
 - [ ] 1.4 Add a release checklist and pin the consuming Docker deployment to an immutable tag or commit.
+- [x] 1.5 Add version `0.1.0`, MIT licensing metadata, source and issue URLs in `composer.json`, `ai_assistant.php`, and `README.md`, with full license terms in `LICENSE` and consistency checks in `tests/metadata.test.js`. Compatibility release gates remain open.
 
 ## 2. Validation and tests
 

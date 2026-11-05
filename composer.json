@@ -1,0 +1,23 @@
+{
+    "name": "code-omega-solutions/ai_assistant",
+    "type": "roundcube-plugin",
+    "description": "AI-assisted email drafting in Roundcube using Open WebUI.",
+    "version": "0.1.0",
+    "license": "MIT",
+    "homepage": "https://github.com/Code-Omega-Solutions/roundcube-ai-assistant",
+    "support": {
+        "source": "https://github.com/Code-Omega-Solutions/roundcube-ai-assistant",
+        "issues": "https://github.com/Code-Omega-Solutions/roundcube-ai-assistant/issues"
+    },
+    "require": {
+        "php": ">=7.4",
+        "ext-curl": "*",
+        "ext-json": "*",
+        "roundcube/plugin-installer": "~0.3.5"
+    },
+    "autoload": {
+        "classmap": [
+            "ai_assistant.php"
+        ]
+    }
+}

@@ -10,6 +10,55 @@
   var draftOutput;
   var generateButton;
   var insertButton;
+  var englishFallback = {
+    ai_draft_button: "AI draft",
+    ai_assistant_label: "AI email assistant",
+    ai_assistant_heading: "AI draft",
+    close: "Close",
+    instructions: "Instructions",
+    default_instructions: "Draft a clear, concise email body. If the context contains an incoming email, draft a suitable reply; otherwise, write a new email based on my instructions.",
+    generate_draft: "Generate draft",
+    draft_output: "Draft",
+    insert_into_reply: "Insert into reply",
+    status_inserted: "Draft inserted. Review it before sending.",
+    status_generating: "Generating draft…",
+    status_ready: "Draft ready. Review it, then insert.",
+    status_no_draft: "No draft was returned.",
+    error_too_long: "The message or instructions are too long.",
+    error_not_configured: "The AI service is not configured.",
+    error_request_failed: "The AI request failed. Check the Open WebUI connection and model configuration.",
+  };
+  var errorLabels = {
+    too_long: "error_too_long",
+    not_configured: "error_not_configured",
+    request_failed: "error_request_failed",
+  };
+
+  function localizedText(key) {
+    var translated =
+      typeof rcmail.gettext === "function"
+        ? rcmail.gettext(key, "ai_assistant")
+        : "";
+    if (
+      typeof translated === "string" &&
+      translated.trim() !== "" &&
+      translated !== key &&
+      translated !== "[" + key + "]" &&
+      translated !== "[ai_assistant." + key + "]"
+    ) {
+      return translated;
+    }
+
+    return englishFallback[key] || englishFallback.error_request_failed;
+  }
+
+  function resultErrorText(error) {
+    return localizedText(errorLabels[error] || "error_request_failed");
+  }
+
+  function promptForInstructions(value) {
+    return value.trim() || englishFallback.default_instructions;
+  }
 
   function editorInstance() {
     if (window.tinymce && typeof window.tinymce.get === "function") {
@@ -92,15 +141,15 @@
       field.dispatchEvent(new Event("change", { bubbles: true }));
     }
 
-    status.textContent = "Draft inserted. Review it before sending.";
+    status.textContent = localizedText("status_inserted");
   }
 
   function generateDraft() {
     var context = composerText();
-    var prompt = instructions.value.trim();
+    var prompt = promptForInstructions(instructions.value);
     generateButton.disabled = true;
     insertButton.disabled = true;
-    status.textContent = "Generating draft…";
+    status.textContent = localizedText("status_generating");
     draftOutput.value = "";
 
     rcmail.http_post("plugin.ai_assistant.draft", {
@@ -119,19 +168,19 @@
     panel.className = "ai-assistant-sidebar";
     panel.hidden = true;
     panel.setAttribute("role", "complementary");
-    panel.setAttribute("aria-label", "AI email assistant");
+    panel.setAttribute("aria-label", localizedText("ai_assistant_label"));
     panel.innerHTML = [
       '<div class="ai-assistant-header">',
-      "<h3>AI draft</h3>",
-      '<button type="button" class="btn btn-sm ai-assistant-close">Close</button>',
+      '<h3 class="ai-assistant-heading"></h3>',
+      '<button type="button" class="btn btn-sm ai-assistant-close"></button>',
       "</div>",
-      '<label for="ai-assistant-instructions">Instructions</label>',
-      '<textarea id="ai-assistant-instructions" class="form-control" rows="4">Draft a clear, concise email body. If the context contains an incoming email, draft a suitable reply; otherwise, write a new email based on my instructions.</textarea>',
-      '<button type="button" class="btn btn-secondary" id="ai-assistant-generate">Generate draft</button>',
+      '<label for="ai-assistant-instructions" class="ai-assistant-instructions-label"></label>',
+      '<textarea id="ai-assistant-instructions" class="form-control" rows="4"></textarea>',
+      '<button type="button" class="btn btn-secondary" id="ai-assistant-generate"></button>',
       '<div id="ai-assistant-status" role="status" aria-live="polite"></div>',
-      '<label for="ai-assistant-output">Draft</label>',
+      '<label for="ai-assistant-output" class="ai-assistant-output-label"></label>',
       '<textarea id="ai-assistant-output" class="form-control" rows="10"></textarea>',
-      '<button type="button" class="btn btn-primary" id="ai-assistant-insert" disabled>Insert into reply</button>',
+      '<button type="button" class="btn btn-primary" id="ai-assistant-insert" disabled></button>',
     ].join("");
     var sidebar = document.querySelector("#layout-sidebar .scroller");
     (sidebar || document.body).appendChild(panel);
@@ -141,6 +190,17 @@
     status = panel.querySelector("#ai-assistant-status");
     generateButton = panel.querySelector("#ai-assistant-generate");
     insertButton = panel.querySelector("#ai-assistant-insert");
+    panel.querySelector(".ai-assistant-heading").textContent =
+      localizedText("ai_assistant_heading");
+    panel.querySelector(".ai-assistant-close").textContent =
+      localizedText("close");
+    panel.querySelector(".ai-assistant-instructions-label").textContent =
+      localizedText("instructions");
+    instructions.placeholder = localizedText("default_instructions");
+    generateButton.textContent = localizedText("generate_draft");
+    panel.querySelector(".ai-assistant-output-label").textContent =
+      localizedText("draft_output");
+    insertButton.textContent = localizedText("insert_into_reply");
 
     panel
       .querySelector(".ai-assistant-close")
@@ -177,14 +237,14 @@
     rcmail.addEventListener("plugin.ai_assistant.result", function (result) {
       generateButton.disabled = false;
       if (result.error) {
-        status.textContent = result.error;
+        status.textContent = resultErrorText(result.error);
         return;
       }
       draftOutput.value = result.draft || "";
       insertButton.disabled = !draftOutput.value.trim();
       status.textContent = draftOutput.value
-        ? "Draft ready. Review it, then insert."
-        : "No draft was returned.";
+        ? localizedText("status_ready")
+        : localizedText("status_no_draft");
     });
   });
 })();

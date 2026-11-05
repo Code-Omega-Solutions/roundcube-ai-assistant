@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * Roundcube AI Assistant.
+ *
+ * @version 0.1.0
+ * @license MIT See LICENSE.
+ * @link https://github.com/Code-Omega-Solutions/roundcube-ai-assistant
+ */
 class ai_assistant extends rcube_plugin
 {
     public $task = 'mail';
@@ -42,7 +49,7 @@ class ai_assistant extends rcube_plugin
         $instructions = trim((string) rcube_utils::get_input_value('instructions', rcube_utils::INPUT_POST));
 
         if (strlen($context) > 60000 || strlen($instructions) > 4000) {
-            $this->send_result(['error' => 'The message or instructions are too long.']);
+            $this->send_result(['error' => 'too_long']);
             return;
         }
 
@@ -51,7 +58,7 @@ class ai_assistant extends rcube_plugin
         $modelId = trim((string) getenv('OPENWEBUI_MODEL'));
 
         if ($apiKey === '' || $baseUrl === '' || $modelId === '') {
-            $this->send_result(['error' => 'The AI service is not configured.']);
+            $this->send_result(['error' => 'not_configured']);
             return;
         }
 
@@ -106,7 +113,7 @@ class ai_assistant extends rcube_plugin
 
             $this->send_result(['draft' => $draft]);
         } catch (Throwable $exception) {
-            $this->send_result(['error' => 'The AI request failed. Check the Open WebUI connection and model configuration.']);
+            $this->send_result(['error' => 'request_failed']);
         }
     }
 

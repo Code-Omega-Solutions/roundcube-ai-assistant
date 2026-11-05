@@ -74,6 +74,7 @@ As a user, I can open and close the assistant from the compose toolbar and use i
 - **FR-010**: Documentation MUST explain that compose text is sent to the configured Open WebUI service and describe tool access available to its API-key user.
 - **FR-011**: The project MUST maintain tested Roundcube/Open WebUI compatibility claims and installation/configuration guidance before making a release.
 - **FR-012**: The effective Open WebUI tool policy MUST be documented and deliberately configurable before a general-purpose reusable release. The extracted implementation currently sends model tool IDs plus all tools available to the API-key user; this is a known productization concern, not a read-only guarantee.
+- **FR-013**: The plugin MUST publish consistent semantic version, licensing status, source repository, and issue tracker metadata in its package manifest and documentation while retaining the `ai_assistant` plugin directory name. Declaring metadata alone MUST NOT imply a tagged release or tested compatibility.
 
 ### Key Entities
 
@@ -96,5 +97,5 @@ As a user, I can open and close the assistant from the compose toolbar and use i
 - The initial supported provider is Open WebUI; provider abstraction is out of scope until separately specified.
 - The initial interface is the Roundcube compose view and the plugin identifier remains `ai_assistant`.
 - The existing implementation is the starting baseline, not proof of compatibility beyond its current Roundcube deployment.
-- The license is unresolved. The public source repository does not yet grant a reuse license; choose and add one before announcing a reusable release.
+- The repository owner selected MIT for the original plugin code on 2026-11-05. Package metadata declares `MIT`, and `LICENSE` contains the full terms; third-party materials retain their own licenses and notices. Version `0.1.0` remains an initial development version, not a tagged release. Compatibility and tool-policy release gates remain open.
 - Tool discovery/allow-list policy must be decided before recommending the plugin for deployments whose Open WebUI API-key user has side-effecting tools.
