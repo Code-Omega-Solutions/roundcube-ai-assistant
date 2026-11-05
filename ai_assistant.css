@@ -1,0 +1,35 @@
+#ai-assistant-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+#ai-assistant-sidebar[hidden] {
+  display: none !important;
+}
+
+#ai-assistant-sidebar .ai-assistant-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#ai-assistant-sidebar h3 {
+  margin: 0;
+}
+
+#ai-assistant-sidebar textarea {
+  width: 100%;
+  resize: vertical;
+}
+
+#ai-assistant-sidebar #ai-assistant-output {
+  min-height: 8rem;
+}
+
+#ai-assistant-status {
+  min-height: 1.25rem;
+}
