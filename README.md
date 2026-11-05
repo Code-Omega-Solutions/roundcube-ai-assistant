@@ -1,6 +1,6 @@
 # Roundcube AI Assistant
 
-A Roundcube plugin that provides an AI-assisted draft sidebar in the compose view. The initial implementation integrates with Open WebUI.
+A Roundcube plugin that provides an AI-assisted draft sidebar in the compose view for new messages and replies. The initial implementation integrates with Open WebUI.
 
 ## Current status
 

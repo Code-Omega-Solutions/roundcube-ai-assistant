@@ -126,7 +126,7 @@
       '<button type="button" class="btn btn-sm ai-assistant-close">Close</button>',
       "</div>",
       '<label for="ai-assistant-instructions">Instructions</label>',
-      '<textarea id="ai-assistant-instructions" class="form-control" rows="4">Draft a clear, concise reply. Use connected tools such as the document management system when useful.</textarea>',
+      '<textarea id="ai-assistant-instructions" class="form-control" rows="4">Draft a clear, concise email body. If the context contains an incoming email, draft a suitable reply; otherwise, write a new email based on my instructions.</textarea>',
       '<button type="button" class="btn btn-secondary" id="ai-assistant-generate">Generate draft</button>',
       '<div id="ai-assistant-status" role="status" aria-live="polite"></div>',
       '<label for="ai-assistant-output">Draft</label>',
